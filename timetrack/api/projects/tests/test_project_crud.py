@@ -1,11 +1,12 @@
 import pytest
+from rest_framework.test import APIClient
 
 from api.projects.tests.factories import ProjectFactory
 from api.users.tests.factories import TimeTrackUserFactory
 
 
 @pytest.mark.django_db
-def test_project_create(client):
+def test_project_create(client: APIClient) -> None:
     """
     Test project create
     """
@@ -20,7 +21,7 @@ def test_project_create(client):
 
 
 @pytest.mark.django_db
-def test_project_retrieve(client):
+def test_project_retrieve(client: APIClient) -> None:
     """
     Test project retrieve
     """
@@ -39,7 +40,7 @@ def test_project_retrieve(client):
 
 
 @pytest.mark.django_db
-def test_project_delete(client):
+def test_project_delete(client: APIClient) -> None:
     """
     Test project delete
     """
@@ -52,7 +53,7 @@ def test_project_delete(client):
 
 
 @pytest.mark.django_db
-def test_project_update(client):
+def test_project_update(client: APIClient) -> None:
     """
     Test project update
     """

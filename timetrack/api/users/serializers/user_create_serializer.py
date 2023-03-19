@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
@@ -12,5 +14,5 @@ class UserCreateSerializer(serializers.ModelSerializer):
         fields = ('uuid', 'email', 'username', 'password', 'first_name', 'last_name', 'date_joined', 'is_active', )
         read_only_fields = ('uuid', )
 
-    def create(self, validated_data):
+    def create(self, validated_data: Dict[str, Any]):
         return USER_MODEL.objects.create_user(**validated_data)

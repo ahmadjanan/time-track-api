@@ -28,15 +28,15 @@ class TimeTrackUser(AbstractUser):
     USERNAME_FIELD = EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    def get_full_name(self):
+    def get_full_name(self) -> str:
         """
         Return the first_name plus the last_name, with a space in between.
         """
         full_name = f'{self.first_name} {self.last_name}'
         return full_name.strip()
 
-    def get_short_name(self):
+    def get_short_name(self) -> str:
         """Return the short name for the user."""
-        return self.first_name
+        return self.first_name.__str__()
 
     get_full_name.short_description = 'Full Name'

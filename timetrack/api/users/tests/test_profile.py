@@ -1,10 +1,11 @@
 import pytest
+from rest_framework.test import APIClient
 
 from api.users.tests.factories import TimeTrackUserFactory
 
 
 @pytest.mark.django_db
-def test_profile_retrieve(client):
+def test_profile_retrieve(client: APIClient) -> None:
     """
     Test user profile retrieve
     """
@@ -21,7 +22,7 @@ def test_profile_retrieve(client):
 
 
 @pytest.mark.django_db
-def test_profile_update(client):
+def test_profile_update(client: APIClient) -> None:
     """
     Test user profile update
     """

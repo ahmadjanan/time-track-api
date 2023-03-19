@@ -15,8 +15,8 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     owner = models.ForeignKey(USER_MODEL, related_name="owned_project", null=True, on_delete=models.SET_NULL)
 
-    def __str__(self):
-        return self.name
+    def __str__(self) -> str:
+        return self.name.__str__()
 
 
 class ProjectMember(models.Model):
@@ -31,7 +31,7 @@ class ProjectMember(models.Model):
     class Meta:
         unique_together = ("project", "user", )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.project.name} - {self.user.get_full_name()}"
 
 
@@ -45,5 +45,5 @@ class TimeLog(models.Model):
     description = models.CharField(max_length=255)
     member = models.ForeignKey(ProjectMember, related_name="logs", on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.member.project.name} - {self.member.user.get_full_name()}: {self.start_time} to {self.end_time}"

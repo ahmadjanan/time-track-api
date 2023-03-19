@@ -3,5 +3,5 @@ from rest_framework.test import APIClient
 
 
 @pytest.fixture
-def client():
+def client() -> APIClient:
     return APIClient()

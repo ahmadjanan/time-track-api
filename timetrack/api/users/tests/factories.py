@@ -16,7 +16,7 @@ class TimeTrackUserFactory(DjangoModelFactory):
     last_name = "User"
 
     @staticmethod
-    def with_password(password, **kwargs):
+    def with_password(password: str, **kwargs) -> settings.AUTH_USER_MODEL:
         """
         Generate test user and set password.
         """

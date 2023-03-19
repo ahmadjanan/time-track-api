@@ -1,3 +1,4 @@
+from django.conf import settings
 from factory.django import DjangoModelFactory
 
 from api.projects.models import Project
@@ -15,7 +16,7 @@ class ProjectFactory(DjangoModelFactory):
     description = "Test Project Description"
 
     @staticmethod
-    def with_owner(owner, **kwargs):
+    def with_owner(owner: settings.AUTH_USER_MODEL, **kwargs) -> Project:
         """
         Generate test user and set password.
         """

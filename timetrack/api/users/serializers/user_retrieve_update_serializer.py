@@ -18,5 +18,5 @@ class UserSerializer(serializers.ModelSerializer):
         model = USER_MODEL
         fields = ('uuid', 'name', )
 
-    def get_name(self, instance):
+    def get_name(self, instance: USER_MODEL) -> str:
         return instance.get_full_name()

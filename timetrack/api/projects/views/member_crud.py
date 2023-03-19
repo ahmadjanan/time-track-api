@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -15,7 +16,7 @@ class ProjectMemberListCreateView(generics.ListCreateAPIView):
     serializer_class = ProjectMemberSerializer
     permission_classes = (IsAuthenticated, ProjectMemberPermissions, )
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """
         If Project uuid is found in request kwargs, limits Members' queryset to the project's Logs.
         If Project uuid is not found, limits Members' queryset to Projects joined by request.user.
@@ -28,7 +29,7 @@ class ProjectMemberListCreateView(generics.ListCreateAPIView):
 
         return queryset
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer: ProjectMemberSerializer) -> None:
         project = get_object_or_404(Project, uuid=self.kwargs["uuid"])
         serializer.save(project=project, user=self.request.user)
 
@@ -41,7 +42,7 @@ class ProjectMemberDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, ProjectMemberPermissions, )
     lookup_field = "uuid"
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """
         Limit queryset to Members belonging to Projects joined by request.user
         """

@@ -15,7 +15,7 @@ class ProjectListCreateView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, ProjectPermissions, )
     queryset = Project.objects.all()
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer: ProjectSerializer) -> None:
         """
         Sets project owner to request.user
         """
@@ -31,6 +31,6 @@ class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     lookup_field = "uuid"
 
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs) -> Response:
         super().delete(request, *args, **kwargs)
         return Response({"message": "Project deleted successfully."}, status=status.HTTP_204_NO_CONTENT)

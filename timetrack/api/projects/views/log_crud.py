@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
@@ -16,7 +17,7 @@ class TimeLogListCreateView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, TimeLogPermissions, )
     queryset = TimeLog.objects.all()
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """
         If Project uuid is found in request kwargs, limits Logs' queryset to the project's Logs.
         If Project uuid is not found, limits Logs' queryset to Projects joined by request.user.
@@ -29,7 +30,7 @@ class TimeLogListCreateView(generics.ListCreateAPIView):
 
         return queryset.filter(member__user=self.request.user)
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer: TimeLogSerializer) -> None:
         """
         Fetch ProjectMember instance using project uuid and request.user and set the Log's Member FK.
         """
@@ -49,7 +50,7 @@ class TimeLogDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, TimeLogPermissions, )
     lookup_field = "uuid"
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """
         Limit queryset to Logs belonging to Projects joined by request.user
         """

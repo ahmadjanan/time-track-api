@@ -1,10 +1,11 @@
 import pytest
+from rest_framework.test import APIClient
 
 from api.users.tests.factories import TimeTrackUserFactory
 
 
 @pytest.mark.django_db
-def test_login(client):
+def test_login(client: APIClient) -> None:
     """
     Test user login
     """
@@ -23,7 +24,7 @@ def test_login(client):
 
 
 @pytest.mark.django_db
-def test_register(client):
+def test_register(client: APIClient) -> None:
     """
     Test user register
     """
