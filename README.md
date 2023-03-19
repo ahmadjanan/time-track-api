@@ -57,3 +57,22 @@ port with `docker ps`:
 
 Note that any changes inside the container will be lost. For that reason, using a SQLite database within a container will
 have no effect. If you want to use SQLite with docker, mount a docker volume and place the SQLite database inside it.
+
+## OpenAPI Swagger support
+
+Once the server is up and running, you can view the API endpoints documentation by navigating to the following URLs in your web browser:
+
+For OpenAPI specification in JSON format:
+
+      http://localhost:8000/schema
+
+For API documentation in a user-friendly format:
+
+      http://localhost:8000/schema/redoc
+
+For API documentation in a Swagger UI format:
+
+      http://localhost:8000/schema/swagger-ui
+
+Using these URLs, you can easily explore the API endpoints and their expected request and 
+response formats.
