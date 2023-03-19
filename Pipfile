@@ -11,6 +11,7 @@ factory-boy = "*"
 pytest-django = "*"
 python-dotenv = "*"
 coverage = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 
