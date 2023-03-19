@@ -6,6 +6,9 @@ from api.users.tests.factories import TimeTrackUserFactory
 
 @pytest.fixture
 def project():
+    """
+    Pytest fixture to generate a user with a project
+    """
     user = TimeTrackUserFactory.with_password(password="secret123")
     project = ProjectFactory.with_owner(owner=user)
 
