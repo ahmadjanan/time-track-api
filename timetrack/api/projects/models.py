@@ -13,19 +13,31 @@ class Project(models.Model):
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True)
     description = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
-    owner = models.ForeignKey(USER_MODEL, related_name="owned_project", null=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(USER_MODEL, related_name="owned_projects", null=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
-        return self.name.__str__()
+        return f"{self.name}"
 
 
 class ProjectMember(models.Model):
     """
     A model for keeping track of project members
     """
+    class Status:
+        APPROVED = 'Approved'
+        DECLINED = 'Declined'
+        PENDING = 'Pending'
+
+        CHOICES = (
+            (APPROVED, 'Approved'),
+            (DECLINED, 'Declined'),
+            (PENDING, 'Pending'),
+        )
+
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, primary_key=True)
-    project = models.ForeignKey(Project, related_name="members", on_delete=models.CASCADE)
-    user = models.ForeignKey(USER_MODEL, related_name="projects", on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name="project_memberships", on_delete=models.CASCADE)
+    user = models.ForeignKey(USER_MODEL, related_name="project_memberships", on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=Status.CHOICES, default=Status.PENDING)
     join_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

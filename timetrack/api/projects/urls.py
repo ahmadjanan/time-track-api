@@ -1,20 +1,18 @@
-from django.urls import path
+from rest_framework import routers
 
-from api.projects.views.log_crud import TimeLogListCreateView, TimeLogDetailView
-from api.projects.views.member_crud import ProjectMemberListCreateView, ProjectMemberDetailView
-from api.projects.views.project_crud import ProjectListCreateView, ProjectDetailView
+from api.projects.views.application_viewset import ApplicationViewSet
+from api.projects.views.log_viewset import TimeLogViewSet
+from api.projects.views.member_viewset import ProjectMemberViewSet
+from api.projects.views.project_viewset import ProjectViewSet
 
-urlpatterns = [
-    # Project views
-    path('', ProjectListCreateView.as_view(), name='project-list-create'),
-    path('<uuid:uuid>', ProjectDetailView.as_view(), name='project-rud'),
-    path('<uuid:uuid>/members', ProjectMemberListCreateView.as_view(), name='project-members-list'),
-    path('<uuid:uuid>/logs', TimeLogListCreateView.as_view(), name='project-logs-list'),
+router = routers.DefaultRouter()
+router.register(r'', ProjectViewSet, basename='projects')
+router.register(r'applications', ApplicationViewSet, basename='all-applications')
+router.register(r'members', ProjectMemberViewSet, basename='all-members')
+router.register(r'logs', TimeLogViewSet, basename='all-members')
+router.register(r'(?P<project_uuid>[^/.]+)/applications', ApplicationViewSet, basename='project-applications')
+router.register(r'(?P<project_uuid>[^/.]+)/members', ProjectMemberViewSet, basename='project-members')
+router.register(r'(?P<project_uuid>[^/.]+)/logs', TimeLogViewSet, basename='project-logs')
+router.register(r'members/(?P<member_uuid>[^/.]+)/logs', TimeLogViewSet, basename='member-logs')
 
-    # ProjectMember views
-    path('members/<uuid:uuid>', ProjectMemberDetailView.as_view(), name='member-rud'),
-
-    # TimeLog views
-    path('logs', TimeLogListCreateView.as_view(), name='logs-self-list'),
-    path('logs/<uuid:uuid>', TimeLogDetailView.as_view(), name='log-rud'),
-]
+urlpatterns = router.urls

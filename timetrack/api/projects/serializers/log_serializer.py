@@ -6,7 +6,7 @@ from api.projects.serializers.member_serializer import ProjectMemberSerializer
 
 class TimeLogSerializer(serializers.ModelSerializer):
     """
-    Serializer for TimeLog CRUD views.
+    Serializer for TimeLog ViewSet.
     """
     member = ProjectMemberSerializer(read_only=True)
 

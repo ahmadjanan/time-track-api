@@ -23,7 +23,7 @@ def test_project_owner_safe_method(client: APIClient, project: Project) -> None:
     Test project owner safe method
     """
     client.force_authenticate(user=project.owner)
-    resp = client.get(f"/api/projects/{project.uuid}")
+    resp = client.get(f"/api/projects/{project.uuid}/")
     assert resp.status_code == 200
 
 
@@ -39,7 +39,7 @@ def test_project_non_owner_safe_method(client: APIClient, project: Project) -> N
     )
 
     client.force_authenticate(user=user)
-    resp = client.get(f"/api/projects/{project.uuid}")
+    resp = client.get(f"/api/projects/{project.uuid}/")
     assert resp.status_code == 200
 
 
@@ -49,17 +49,17 @@ def test_project_owner_unsafe_methods(client: APIClient, project: Project) -> No
     Test project owner unsafe methods
     """
     client.force_authenticate(user=project.owner)
-    resp = client.patch(f"/api/projects/{project.uuid}")
+    resp = client.patch(f"/api/projects/{project.uuid}/")
     assert resp.status_code == 200
     resp = client.put(
-        f"/api/projects/{project.uuid}",
+        f"/api/projects/{project.uuid}/",
         data={
             "name": "Updated project name",
             "description": "Updated project description",
         }
     )
     assert resp.status_code == 200
-    resp = client.delete(f"/api/projects/{project.uuid}")
+    resp = client.delete(f"/api/projects/{project.uuid}/")
     assert resp.status_code == 204
 
 
@@ -75,12 +75,12 @@ def test_project_non_owner_unsafe_methods(client: APIClient, project: Project) -
     )
 
     client.force_authenticate(user=user)
-    resp = client.delete(f"/api/projects/{project.uuid}")
+    resp = client.delete(f"/api/projects/{project.uuid}/")
     assert resp.status_code == 403
-    resp = client.patch(f"/api/projects/{project.uuid}")
+    resp = client.patch(f"/api/projects/{project.uuid}/")
     assert resp.status_code == 403
     resp = client.put(
-        f"/api/projects/{project.uuid}",
+        f"/api/projects/{project.uuid}/",
         data={
             "name": "Updated project name",
             "description": "Updated project description",

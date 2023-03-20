@@ -28,7 +28,7 @@ def test_project_retrieve(client: APIClient) -> None:
     user = TimeTrackUserFactory.with_password(password="secret123")
     client.force_authenticate(user=user)
     project = ProjectFactory.with_owner(owner=user)
-    resp = client.get(f"/api/projects/{project.uuid}")
+    resp = client.get(f"/api/projects/{project.uuid}/")
 
     assert resp.status_code == 200
 
@@ -47,7 +47,7 @@ def test_project_delete(client: APIClient) -> None:
     user = TimeTrackUserFactory.with_password(password="secret123")
     client.force_authenticate(user=user)
     project = ProjectFactory.with_owner(owner=user)
-    resp = client.delete(f"/api/projects/{project.uuid}")
+    resp = client.delete(f"/api/projects/{project.uuid}/")
 
     assert resp.status_code == 204
 
@@ -64,7 +64,7 @@ def test_project_update(client: APIClient) -> None:
         "name": "Updated Project Name",
         "description": "Updated Project Description",
     }
-    resp = client.patch(f"/api/projects/{project.uuid}", data=patch_data)
+    resp = client.patch(f"/api/projects/{project.uuid}/", data=patch_data)
 
     assert resp.status_code == 200
 

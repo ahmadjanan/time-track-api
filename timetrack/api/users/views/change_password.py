@@ -26,8 +26,7 @@ class ChangePasswordView(generics.UpdateAPIView):
         user = self.get_object()
         serializer = self.get_serializer(user, data=request.data)
 
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response({"message": "password updated successfully."}, status=status.HTTP_200_OK)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "password updated successfully."}, status=status.HTTP_200_OK)

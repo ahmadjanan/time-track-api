@@ -12,4 +12,4 @@ def make_owner_project_member(instance: Project, created: datetime, **kwargs) ->
     Signal to make the project creator a member of the project.
     """
     if created:
-        ProjectMember.objects.create(user=instance.owner, project=instance)
+        ProjectMember.objects.create(user=instance.owner, project=instance, status=ProjectMember.Status.APPROVED)
