@@ -11,7 +11,7 @@ djangorestframework-simplejwt==5.2.2
 drf-spectacular==0.26.1
 exceptiongroup==1.1.1
 factory-boy==3.2.1
-Faker==17.6.0
+Faker==18.2.0
 idna==3.4
 inflection==0.5.1
 iniconfig==2.0.0
