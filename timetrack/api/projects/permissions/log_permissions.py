@@ -9,12 +9,6 @@ class TimeLogPermissions(permissions.BasePermission):
     """
     Time Log Permissions setup
     """
-    @staticmethod
-    def is_owner(user: AbstractUser, obj: TimeLog) -> bool:
-        """
-        Checks whether the requesting user is the owner of the TimeLog object.
-        """
-        return user == obj.member.user
 
     def has_object_permission(self, request, view, obj) -> bool:
         """
@@ -25,4 +19,4 @@ class TimeLogPermissions(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return is_approved_project_member(request.user, obj.member.project)
 
-        return is_superuser(request.user) or self.is_owner(request.user, obj)
+        return is_superuser(request.user) or request.user == obj.member.user
