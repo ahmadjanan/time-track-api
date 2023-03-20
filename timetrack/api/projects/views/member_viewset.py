@@ -1,12 +1,9 @@
-from django.db import IntegrityError
 from django.db.models import QuerySet
-from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
-from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from api.projects.models import ProjectMember, Project
+from api.projects.models import ProjectMember
 from api.projects.permissions.member_permissions import ProjectMemberPermissions
 from api.projects.serializers.member_serializer import ProjectMemberSerializer
 
@@ -17,6 +14,7 @@ class ProjectMemberViewSet(viewsets.ModelViewSet):
     """
     serializer_class = ProjectMemberSerializer
     permission_classes = (IsAuthenticated, ProjectMemberPermissions, )
+    http_method_names = ("get", "head", "put", "patch", "delete", )
 
     def get_queryset(self) -> QuerySet:
         """
@@ -33,20 +31,9 @@ class ProjectMemberViewSet(viewsets.ModelViewSet):
         )
 
         if self.kwargs.get("project_uuid"):
-            project = get_object_or_404(Project, uuid=self.kwargs["project_uuid"])
-            return queryset.filter(project=project)
+            return queryset.filter(project__uuid=self.kwargs["project_uuid"])
 
         return queryset
-
-    def perform_create(self, serializer: ProjectMemberSerializer) -> None:
-        """
-        Fetch Project instance using project uuid and request.user and set the ProjectMember's Project FK.
-        """
-        project = get_object_or_404(Project, uuid=self.kwargs["project_uuid"])
-        try:
-            serializer.save(project=project, user=self.request.user)
-        except IntegrityError:
-            raise ValidationError({"message": "already applied to this project."})
 
     def destroy(self, request, *args, **kwargs) -> Response:
         """

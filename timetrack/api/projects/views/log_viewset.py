@@ -5,7 +5,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from api.projects.models import TimeLog, Project, ProjectMember
+from api.projects.models import TimeLog, ProjectMember
 from api.projects.permissions.log_permissions import TimeLogPermissions
 from api.projects.serializers.log_serializer import TimeLogSerializer
 
@@ -28,8 +28,7 @@ class TimeLogViewSet(viewsets.ModelViewSet):
             member__status=ProjectMember.Status.APPROVED
         )
         if self.kwargs.get("project_uuid"):
-            project = get_object_or_404(Project, uuid=self.kwargs["project_uuid"])
-            return queryset.filter(member__project=project)
+            return queryset.filter(member__project__uuid=self.kwargs["project_uuid"])
 
         return queryset
 
