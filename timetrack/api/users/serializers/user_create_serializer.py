@@ -7,6 +7,9 @@ USER_MODEL = get_user_model()
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
+    """
+    Serializer for creating a user.
+    """
     password = serializers.CharField(max_length=100, write_only=True)
 
     class Meta:
@@ -15,4 +18,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         read_only_fields = ('uuid', )
 
     def create(self, validated_data: Dict[str, Any]):
+        """
+        Create a User object using the create_user method to properly hash the password in DB.
+        """
         return USER_MODEL.objects.create_user(**validated_data)

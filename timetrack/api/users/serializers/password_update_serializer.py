@@ -20,12 +20,18 @@ class PasswordUpdateSerializer(serializers.ModelSerializer):
         fields = ('old_password', 'new_password')
 
     def validate_old_password(self, value: str) -> str:
+        """
+        Validate the old password of the user with the DB.
+        """
         user = self.context['request'].user
         if not check_password(value, user.password):
             raise serializers.ValidationError('Incorrect password.')
         return value
 
     def update(self, instance, validated_data: Dict[str, Any]):
+        """
+        Update the user's password in the DB.
+        """
         user = self.context['request'].user
         user.set_password(validated_data['new_password'])
         user.save()

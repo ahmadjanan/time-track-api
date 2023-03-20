@@ -8,6 +8,9 @@ USER_MODEL = get_user_model()
 
 
 class TimeTrackUserRetrieveUpdateView(RetrieveUpdateAPIView):
+    """
+    TimeTrackUser RUD API View.
+    """
     queryset = USER_MODEL.objects.all()
     serializer_class = UserRetrieveUpdateSerializer
     lookup_field = 'uuid'

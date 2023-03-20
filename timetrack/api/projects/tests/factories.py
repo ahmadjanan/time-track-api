@@ -6,7 +6,7 @@ from api.projects.models import Project
 
 class ProjectFactory(DjangoModelFactory):
     """
-    User Factory for generating test TimeTrackUser instances in database.
+    Project Factory for generating test Project instances in database.
     """
     class Meta:
         model = Project
@@ -18,7 +18,7 @@ class ProjectFactory(DjangoModelFactory):
     @staticmethod
     def with_owner(owner: settings.AUTH_USER_MODEL, **kwargs) -> Project:
         """
-        Generate test user and set password.
+        Generate test project and set owner.
         """
         project = ProjectFactory.build(owner=owner, **kwargs)
         project.save()

@@ -5,6 +5,9 @@ from api.projects.serializers.member_serializer import ProjectMemberSerializer
 
 
 class TimeLogSerializer(serializers.ModelSerializer):
+    """
+    Serializer for TimeLog CRUD views.
+    """
     member = ProjectMemberSerializer(read_only=True)
 
     class Meta:

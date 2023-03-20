@@ -5,6 +5,9 @@ from api.users.serializers.user_retrieve_update_serializer import UserRetrieveUp
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Project CRUD views.
+    """
     owner = UserRetrieveUpdateSerializer(read_only=True)
 
     class Meta:

@@ -20,6 +20,9 @@ class ChangePasswordView(generics.UpdateAPIView):
         return self.request.user
 
     def update(self, request, *args, **kwargs):
+        """
+        Update a user's password and raise errors, if any.
+        """
         user = self.get_object()
         serializer = self.get_serializer(user, data=request.data)
 
