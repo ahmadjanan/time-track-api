@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
-from config.env_vars import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from dotenv import find_dotenv, load_dotenv
+
+from config.env_vars import required_env_var
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
@@ -21,13 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = SECRET_KEY
+load_dotenv(find_dotenv())
+
+SECRET_KEY = required_env_var("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -84,7 +88,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / DB_NAME,
+        "NAME": BASE_DIR / required_env_var("DB_NAME"),
     }
 }
 
