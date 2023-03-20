@@ -28,7 +28,7 @@ class ProjectMemberViewSet(viewsets.ModelViewSet):
         queryset = ProjectMember.objects.filter(
             project__uuid__in=projects_uuids,
             status=ProjectMember.Status.APPROVED
-        )
+        ).select_related("user")
 
         if self.kwargs.get("project_uuid"):
             return queryset.filter(project__uuid=self.kwargs["project_uuid"])

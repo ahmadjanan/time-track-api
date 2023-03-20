@@ -1,5 +1,6 @@
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import BrowsableAPIRenderer
 from rest_framework.response import Response
 
 from api.projects.models import Project
@@ -13,7 +14,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     """
     serializer_class = ProjectSerializer
     permission_classes = (IsAuthenticated, ProjectPermissions, )
-    queryset = Project.objects.all()
+    queryset = Project.objects.all().select_related("owner")
 
     def perform_create(self, serializer: ProjectSerializer) -> None:
         """

@@ -23,10 +23,12 @@ class TimeLogViewSet(viewsets.ModelViewSet):
         If Project uuid is not found, limits Logs' queryset to Projects joined by request.user.
         """
         projects_uuids = self.request.user.project_memberships.values_list("project__uuid", flat=True)
+
         queryset = TimeLog.objects.filter(
             member__project__uuid__in=projects_uuids,
             member__status=ProjectMember.Status.APPROVED
-        )
+        ).select_related("member", "member__user")
+
         if self.kwargs.get("project_uuid"):
             return queryset.filter(member__project__uuid=self.kwargs["project_uuid"])
 
