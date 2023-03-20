@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  django:
+    container_name: timetrack
+    build:
+      context: .
+      dockerfile: DockerFile
+    command: bash -c "
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: on-failure
+    links:
+      - db
+
+  db:
+    image: "keinos/sqlite3:latest"
+    volumes:
+      - db_data:/app/db/
+
+volumes:
+  db_data:

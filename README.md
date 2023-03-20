@@ -43,20 +43,17 @@ To view the coverage report
     pipenv run coverage run -m pytest
     pipenv run coverage report
 
-## Docker support
+## Docker-compose support
 
-Build the docker image with:
+To build the Docker images, run the following command:
 
-        docker build -t time-track .
+        docker-compose build
 
-The default command is to start the web server. Run the image
-with `-P` docker option to expose the internal port and check the exposed
-port with `docker ps`:
+To start the Docker containers, run the following command:
 
-        docker run --env-file .env -p 8000:8000 time-track
+        docker-compose up
 
-Note that any changes inside the container will be lost. For that reason, using a SQLite database within a container will
-have no effect. If you want to use SQLite with docker, mount a docker volume and place the SQLite database inside it.
+The database is created in a separate container and will persist even after the containers are stopped. This means that you can stop and start the containers without losing your data.
 
 ## OpenAPI Swagger support
 
