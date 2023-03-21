@@ -5,9 +5,9 @@ services:
     container_name: timetrack
     build:
       context: .
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
+    entrypoint: /app/entrypoint.sh
     command: bash -c "
-      python manage.py migrate &&
       python manage.py runserver 0.0.0.0:8000
       "
     ports:
